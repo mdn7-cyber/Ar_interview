@@ -11,7 +11,7 @@ import { setUserData } from '../redux/userSlice';
 import AuthModel from './AuthModel';
 
 function Navbar() {
-  const { userData } = useSelector((state) => state.user)
+  const { userData } = useSelector((state) => state.user) || {}
   const [showCreditPopup, setShowCreditPopup] = useState(false)
   const [showUserPopup, setShowUserPopup] = useState(false)
   const [showAuth, setShowAuth] = useState(false);
@@ -31,6 +31,11 @@ function Navbar() {
     }
   }
 
+  // ✅ SAFE NAME INITIAL (NO CRASH)
+  const userInitial = (userData?.name || "")
+    .slice(0, 1)
+    .toUpperCase();
+
   return (
     <div className='flex justify-center px-4 pt-6 relative z-50'>
 
@@ -45,7 +50,7 @@ function Navbar() {
         px-6 py-4 flex justify-between items-center'
       >
 
-        {/* LEFT LOGO */}
+        {/* LOGO */}
         <div
           onClick={() => navigate("/")}
           className='flex items-center gap-3 cursor-pointer'
@@ -67,7 +72,7 @@ function Navbar() {
             <button
               onClick={() => {
                 if (!userData) return setShowAuth(true);
-                setShowCreditPopup(!showCreditPopup);
+                setShowCreditPopup(prev => !prev);
                 setShowUserPopup(false);
               }}
               className='flex items-center gap-2 
@@ -76,7 +81,7 @@ function Navbar() {
               hover:bg-white/20 transition'
             >
               <BsCoin size={18} className="text-yellow-400" />
-              {userData?.credits || 0}
+              {userData?.credits ?? 0}
             </button>
 
             {showCreditPopup && (
@@ -105,7 +110,7 @@ function Navbar() {
             <button
               onClick={() => {
                 if (!userData) return setShowAuth(true);
-                setShowUserPopup(!showUserPopup);
+                setShowUserPopup(prev => !prev);
                 setShowCreditPopup(false);
               }}
               className='w-9 h-9 
@@ -113,7 +118,7 @@ function Navbar() {
               text-white rounded-full flex items-center justify-center font-semibold shadow-md'
             >
               {userData
-                ? userData?.name.slice(0, 1).toUpperCase()
+                ? (userInitial || "?")
                 : <FaUserAstronaut size={16} />}
             </button>
 
@@ -123,7 +128,7 @@ function Navbar() {
               rounded-xl p-4 shadow-2xl backdrop-blur-xl'>
 
                 <p className='text-sm text-cyan-400 font-medium mb-2'>
-                  {userData?.name}
+                  {userData?.name || "User"}
                 </p>
 
                 <button

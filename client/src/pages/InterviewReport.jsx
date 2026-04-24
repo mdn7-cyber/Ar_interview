@@ -25,7 +25,9 @@ function InterviewReport() {
 
     if (!report) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+     <div className='min-h-screen relative overflow-hidden 
+bg-gradient-to-br from-[#0f172a] via-[#111827] to-[#020617] 
+text-white'>
         <p className="text-gray-500 text-lg">
           Loading Report...
         </p>
