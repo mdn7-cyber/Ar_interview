@@ -60,7 +60,7 @@ function Navbar() {
           </div>
 
           <h1 className='font-semibold hidden md:block text-lg text-white tracking-wide'>
-            Ar_Interview<span className='text-gray-400'>.Mock</span>
+            ResuMate<span className='text-gray-400'>.Mock</span>
           </h1>
         </div>
 
